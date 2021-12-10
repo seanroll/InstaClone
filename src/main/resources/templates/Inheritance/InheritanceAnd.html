@@ -1,0 +1,104 @@
+<!DOCTYPE HTML>
+<html xmlns:layout="http://www.w3.org/1999/xhtml" xmlns:th="http://www.w3.org/1999/xhtml" lang="en">
+
+
+<head>
+    <div th:replace="fragments/header :: head"></div>
+    <title>Inheritance</title>
+</head>
+
+<body>
+
+<div th:replace="fragments/body :: navbar"></div>
+
+<div layout:fragment="content" th:remove="tag">
+
+
+    <div class="container">
+
+    <div class="center-block" style="margin: 2% 3% 3%; font-family: gilroy,serif;">
+
+        <div class="col-12" style="text-align: center;">
+            <h1><strong>Data Filtering and Sorting</strong></h1>
+        </div>
+
+                <div class="jumbotron text-center row">
+
+                    <div class="col-md-6">
+                        <h3>Select options to filter and sort</h3>
+                        <form id="fibForm" action="/InheritanceAnd" th:object="${ctl}" method="POST" >
+                            <div class="jumbotron text-left row">
+
+                                <div class="col-md-4">
+
+                                    <input type="checkbox" id="CLS" name="Codelanguages" value="1" th:checked="${ctl.isCodelang()}">
+                                    <label for="CLS">Code Languages</label>
+                                    <div class="form-group">
+                                        <label>Sort by</label>
+
+                                        <div th:each="option : ${T(rain.finalproject.minilabs.AndrewInheritance.CodeLanguages.KeyType).values()}">
+                                            <div class="custom-control custom-radio custom-control-inline">
+                                                <input type="radio" th:field="*{CLkey}" th:value="${option}" class="custom-control-input">
+                                                <label class="custom-control-label" th:for="${#ids.prev('CLkey')}" th:text="${option}">option</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                        <input type="checkbox" id="STS" name="States" value="1" th:checked="${ctl.isState()}">
+                                        <label for="STS">States</label>
+                                        <div class="form-group">
+                                            <label>Sort by</label>
+                                  <div th:each="option : ${T(rain.finalproject.minilabs.AndrewInheritance.States.KeyType).values()}">
+                                    <div class="custom-control custom-radio custom-control-inline">
+                                        <input type="radio" th:field="*{Stateskey}" th:value="${option}" class="custom-control-input">
+                                        <label class="custom-control-label" th:for="${#ids.prev('Stateskey')}" th:text="${option}">option</label>
+                                    </div>
+                                  </div>
+                                  </div>
+                                </div>
+                            </div>
+                            <button>Go!</button>
+                        </form>
+
+                    </div>
+                    <div class="col-md-6">
+                        <h3>Filtered Summary</h3>
+                        <table class="mx-auto">
+                            <tr>
+                                <th scope="col">Size</th>
+                                <th scope="col">First Row</th>
+                                <th scope="col">Last Row</th>
+                            </tr>
+                            <tr>
+                                <td th:text="${ctl.getCount()}"></td>
+                                <td th:text="${ctl.list.get(0)}"></td>
+                                <td th:text="${ctl.list.get(ctl.count-1)}"></td>
+                            </tr>
+                        </table>
+                        <br><h3>Data Details</h3>
+                        <table class="mx-auto">
+                            <tr>
+                                <th scope="col">Rows</th>
+                            </tr>
+                            <tr th:each="line: ${ctl.list}">
+                                <td th:text="${line.toString()}" ></td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+    </div>
+        <style>
+            table, td, th {
+                border: 1px solid;
+            }
+            td, th {
+                text-align:left;
+            }
+        </style>
+    </div>
+</div>
+<div th:replace="fragments/body :: scripts"></div>
+</body>
+
+</html>

@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <div th:replace="fragments/header :: head"></div>
+    <title>Linked List Mini-Lab | Sean</title>
+    <link rel="stylesheet" href="../../static/css/bootstrap.css">
+</head>
+<body>
+<!-- Navbar -->
+<div th:replace="fragments/body :: navbar"></div>
+
+<div class="header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+    <h1 class="display-4">Linked List Mini-Lab | Sean</h1>
+</div>
+
+</body>
+
+<div style="padding-left:0;padding-right:0;margin-left:12.5%;margin-right:12.5%;margin-bottom:auto;display:block;">
+    <h4 class="card-title">Creates 3 random linked lists of different sizes and 3 random array lists of different sizes then does the operation, logging the time it takes. Outliers may occur due to the random generation</h4>
+</div>
+
+<hr>
+<br>
+
+<div class="card w-75" style="padding-left:0;padding-right:0;margin-left:auto;margin-right:auto;margin-bottom:auto;display:block;">
+    <div class = card-body>
+        <h5 class="card-title">Compiled Data</h5>
+        <table class="table table-striped" style = "margin: auto;">
+            <tr>
+                <td>List</td>
+                <td>Complexity</td>
+                <td>Time (N=5)</td>
+                <td>Time (N=10)</td>
+                <td>Time (N=100)</td>
+            </tr>
+            <tr>
+                <td>Array List</td>
+                <td th:text="${alComplexity}">...</td>
+                <td th:text="${al5T}">...</td>
+                <td th:text="${al10T}">...</td>
+                <td th:text="${al100T}">...</td>
+            </tr>
+            <tr>
+                <td>Linked List</td>
+                <td th:text="${llComplexity}">...</td>
+                <td th:text="${ll5T}">...</td>
+                <td th:text="${ll10T}">...</td>
+                <td th:text="${ll100T}">...</td>
+            </tr>
+        </table>
+    </div>
+</div>
+
+<hr>
+<br>
+
+<div class="card w-75" style="padding-left:0;padding-right:0;margin-left:auto;margin-right:auto;margin-bottom:auto;display:block;">
+    <div class = card-body>
+        <h5 class = card-title>Choose Operation</h5>
+        <form method="GET" th:action="@{/LLSean}">
+        <fieldset class="form-group row">
+            <div class="col-sm-10">
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="option" id="insertHead" value="insertHead" th:checked="${option == 'insertHead'}">
+                    <label class="form-check-label" for="insertHead">
+                        insert Head
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="option" id="deleteHead" value="deleteHead" th:checked="${option == 'deleteHead'}">
+                    <label class="form-check-label" for="deleteHead">
+                        delete Head
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="option" id="insertMid" value="insertMid" th:checked="${option == 'insertMid'}">
+                    <label class="form-check-label" for="insertMid">
+                        insert Mid
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="option" id="deleteMid" value="deleteMid" th:checked="${option == 'deleteMid'}">
+                    <label class="form-check-label" for="deleteMid">
+                        delete Mid
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="option" id="insertTail" value="insertTail" th:checked="${option == 'insertTail'}">
+                    <label class="form-check-label" for="insertTail">
+                        insert Tail
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="option" id="removeTail" value="removeTail" th:checked="${option == 'removeTail'}">
+                    <label class="form-check-label" for="removeTail">
+                        remove Tail
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="option" id="sort" value="sort" th:checked="${option == 'sort'}">
+                    <label class="form-check-label" for="sort">
+                        sort
+                    </label>
+                </div>
+            </div>
+        </fieldset>
+
+        <div class="form-group row">
+            <div class="col-sm-10">
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
+        </div>
+
+        </form>
+    </div>
+</div>
+
+<br>
+<hr>
+
+<div th:replace="fragments/body :: scripts"></div>
+</body>
+</html>

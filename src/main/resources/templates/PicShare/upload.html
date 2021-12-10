@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org/">
+	<head>
+		<div th:replace="fragments/header :: head"></div>
+		<title>Make Post</title>
+	</head>
+	<body>
+		<!-- Navbar -->
+		<div th:replace="fragments/body :: navbar"></div>
+
+		<div class="header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+			<h1 class="display-4">Make Post</h1>
+			<hr>
+			<br>
+		</div>
+
+		<!-- https://stackoverflow.com/questions/60427028/how-to-input-image-file-from-user-and-then-base64-encode-it-in-javascript -->
+		<script>
+			"use strict";
+
+			const fileDataURL = file => new Promise((resolve,reject) => {
+				let fr = new FileReader();
+				fr.onload = () => resolve( fr.result);
+				fr.onerror = reject;
+				fr.readAsDataURL( file)
+			});
+
+			function updateFileData(file) {
+				fileDataURL(file)
+						.then(data => {
+							document.getElementById("fileData").setAttribute("value", data);
+							document.getElementById("fileName").textContent = file.name;
+						})
+						.catch(err => console.log(err));
+			}
+		</script>
+
+		<nav class="w-75" style="padding-left:0;padding-right:0;margin-left:auto;margin-right:auto;display:block;">
+			<div class="card card-body">
+				<h5 class="card-title">Make a post</h5>
+				<form method="POST" th:action="@{/addpost}">
+					<div class="form-group">
+						<label for="captionTextArea">Image</label>
+						<br>
+						<label class="btn btn-outline-dark btn-file">
+							Choose File <input id="fileUpload" type="file" style="display: none;" accept="image/jpeg,image/png" onchange="updateFileData(this.files[0]);">
+						</label>
+						<label id="fileName"></label>
+						<input type="hidden" name="fileData" id="fileData">
+					</div>
+					<div class="form-group">
+						<label for="captionTextArea">Caption</label>
+						<textarea class="form-control" id="captionTextArea" rows="3" name="caption"></textarea>
+					</div>
+					<button type="submit" class="btn btn-primary">Upload</button>
+					<small th:if="${result}" th:text="${result}" class="form-text text-primary"></small>
+					<small th:if="${error}" th:text="${error}" class="form-text text-danger"></small>
+				</form>
+			</div>
+			<br>
+		</nav>
+
+		<!-- Bootstrap & JQuery JS -->
+		<div th:replace="fragments/body :: scripts"></div>
+	</body>
+</html>

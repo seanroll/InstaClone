@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org/">
+	<head>
+		<div th:replace="fragments/header :: head"></div>
+		<title>Feed</title>
+	</head>
+	<body>
+		<!-- Navbar -->
+		<div th:replace="fragments/body :: navbar"></div>
+
+		<div class="header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+			<h1 class="display-4">Feed</h1>
+			<hr>
+			<br>
+		</div>
+
+		<script>
+			function ToggleShowComments(listId, count) {
+				const ShowComments = document.getElementById("showComments" + listId);
+				ShowComments.textContent = (ShowComments.textContent.substring(0, 13) == "Show comments" ? "Hide comments" : ("Show comments (" + count + ")"));
+			}
+			function ToggleNewComment(listId) {
+				const AddComment = document.getElementById("addComment" + listId);
+				AddComment.textContent = (AddComment.textContent == "Add comment" ? "Hide new comment" : "Add comment");
+			}
+		</script>
+
+		<div th:if="${#lists.isEmpty(posts)}">
+			<div class="header px-3 py-3 pt-md-3 pb-md-4 mx-auto text-center">
+				<p class="lead">It looks like there aren't any posts yet! Be the first to <a href="/addpost">post!</a></p>
+			</div>
+			<br>
+		</div>
+
+		<div th:each="post,iter : ${posts}">
+			<div class="card w-50" style="padding-left:0;padding-right:0;margin-left:auto;margin-right:auto;display:block;">
+				<img th:src="@{/getpostimage/__${post.id}__}" class="card-img-top">
+				<div class="card-body">
+					<h6 class="card-title" th:text="${post.ownerUsername}"></h6>
+					<p class="card-text" th:text="${post.caption}"></p>
+					<div class="d-flex justify-content-between align-items-end">
+						<p class="card-text pt-1" style="margin-block-start: 0px; margin-block-end: 0px;"><small th:text="${post.date}"></small></p>
+
+						<form th:id="'deletePost' + ${post.id}" method="POST" th:action="@{/deletepost/__${post.id}__}"></form>
+						<a class="btn btn-outline-danger" th:if="${#request.userPrincipal != null and #request.userPrincipal.name == post.ownerUsername}" th:onclick="'document.forms[\'deletePost' +${post.id} + '\'].submit()'">Delete</a>
+					</div>
+				</div>
+				<ul class="collapse list-group list-group-flush border-bottom-0" th:id="'collapseComments' + ${iter.index}">
+					<li th:each="comment : ${post.comments}" class="list-group-item">
+						<h6 style="display:inline;" th:text="${comment.ownerUsername} + ':'"></h6>
+						<p style="display:inline;" th:text="${comment.commentData}"></p>
+
+						<form th:id="'deleteComment' + ${comment.id}" method="POST" th:action="@{/deletecomment/__${comment.id}__}"></form>
+
+						<div class="d-flex justify-content-between align-items-end">
+							<small style="display:block;" class="pt-2" th:text="${comment.date}"></small>
+							<a class="btn btn-outline-danger" th:if="${#request.userPrincipal != null and #request.userPrincipal.name == comment.ownerUsername}" th:onclick="'document.forms[\'deleteComment' +${comment.id} + '\'].submit()'">Delete</a>
+						</div>
+					</li>
+				</ul>
+				<div th:if="${#request.userPrincipal != null}" class="collapse card-body border-top" th:id="'collapsePostComment' + ${iter.index}">
+					<form method="POST" th:action="@{/addcomment}">
+						<div class="form-group">
+							<input type="hidden" th:name="postId" th:value="${post.id}" />
+							<label th:for="'captionTextArea' + ${iter.index}">New Comment</label>
+							<textarea class="form-control" th:id="'captionTextArea' + ${iter.index}" rows="2" name="commentData"></textarea>
+						</div>
+						<button type="submit" class="btn btn-primary">Submit</button>
+					</form>
+				</div>
+				<div class="card-body border-top" th:id="'commentFooter' + ${iter.index}">
+					<a th:onclick="'ToggleShowComments(' + ${iter.index} + ',' + ${post.comments.size()} + ')'" class="card-link" th:id="'showComments' + ${iter.index}" data-toggle="collapse" th:href="'#collapseComments' + ${iter.index}" role="button" aria-expanded="false" th:aria-controls="'collapseComments' + ${iter.index}" th:text="'Show comments (' + ${post.comments.size()} + ')'"></a>
+					<a th:if="${#request.userPrincipal != null}" th:onclick="'ToggleNewComment(' + ${iter.index} + ')'" class="card-link" th:id="'addComment' + ${iter.index}" data-toggle="collapse" th:href="'#collapsePostComment' + ${iter.index}" role="button" aria-expanded="false" th:aria-controls="'collapsePostComment' + ${iter.index}">Add comment</a>
+				</div>
+			</div>
+			<br>
+		</div>
+
+		<!-- Bootstrap & JQuery JS -->
+		<div th:replace="fragments/body :: scripts"></div>
+
+		<script>
+			const AllImages = document.getElementsByTagName('img');
+			console.log(AllImages.length);
+			for (let i = 0; i < AllImages.length ; i++) {
+				$.get(AllImages[i].src, function (data) {
+					AllImages[i].src = data;
+				});
+			}
+		</script>
+	</body>
+</html>

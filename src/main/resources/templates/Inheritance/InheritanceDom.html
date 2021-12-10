@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org/">
+	<head>
+		<div th:replace="fragments/header :: head"></div>
+		<title>Inheritance Mini-Lab | Dominic</title>
+	</head>
+	<body>
+		<!-- Navbar -->
+		<div th:replace="fragments/body :: navbar"></div>
+
+		<div class="header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+			<h1 class="display-4">Inheritance Mini-Lab | Dominic</h1>
+			<hr>
+			<br>
+		</div>
+
+		<!-- Post data part -->
+		<nav class="w-75" style="padding-left:0;padding-right:0;margin-left:auto;margin-right:auto;display:block;">
+			<div class="nav nav-tabs" id="nav-tab" role="tablist">
+				<a th:class="${className == null or className == 'student'} ? 'nav-item nav-link active' : 'nav-item nav-link'" id="nav-student-tab" data-toggle="tab" href="#nav-student" role="tab" aria-controls="nav-student" aria-selected="true">Student</a>
+				<a th:class="${className == 'teacher'} ? 'nav-item nav-link active' : 'nav-item nav-link'" id="nav-teacher-tab" data-toggle="tab" href="#nav-teacher" role="tab" aria-controls="nav-teacher" aria-selected="false">Teacher</a>
+			</div>
+		</nav>
+		<div class="tab-content w-75" id="nav-tabContent" style="padding-left:0;padding-right:0;margin-left:auto;margin-right:auto;display:block;">
+			<div th:class="${className == null or className == 'student'} ? 'tab-pane fade show active' : 'tab-pane fade'" id="nav-student" role="tabpanel" aria-labelledby="nav-student-tab">
+				<br>
+				<div class="card">
+					<div class="card-body">
+						<h5 class="card-title">Add a new student object</h5>
+						<form method="POST" th:action="@{/InheritanceDom}">
+							<div class="form-group">
+								<input type="text" class="form-control" name="firstName" placeholder="First name" style="margin-bottom:15px;">
+								<input type="text" class="form-control" name="lastName" placeholder="Last name" style="margin-bottom:15px;">
+								<input type="number" class="form-control" name="age" placeholder="Age" style="margin-bottom:15px;">
+								<input type="number" class="form-control" name="grade" placeholder="Grade" style="margin-bottom:15px;">
+								<input type="hidden" name="className" value="student">
+								<small th:if="${studentError}" th:text="${studentError}" class="form-text text-danger"></small>
+							</div>
+							<p class="card-text text-success" th:if="${studentMsg}" th:text="${studentMsg}"></p>
+							<button type="submit" class="btn btn-primary">Add</button>
+						</form>
+					</div>
+				</div>
+			</div>
+			<div th:class="${className == 'teacher'} ? 'tab-pane fade show active' : 'tab-pane fade'" id="nav-teacher" role="tabpanel" aria-labelledby="nav-teacher-tab">
+				<br>
+				<div class="card">
+					<div class="card-body">
+						<h5 class="card-title">Add a new teacher object</h5>
+						<form method="POST" th:action="@{/InheritanceDom}">
+							<div class="form-group">
+								<input type="text" class="form-control" name="firstName" placeholder="First name" style="margin-bottom:15px;">
+								<input type="text" class="form-control" name="lastName" placeholder="Last name" style="margin-bottom:15px;">
+								<input type="number" class="form-control" name="age" placeholder="Age" style="margin-bottom:15px;">
+								<input type="text" class="form-control" name="subject" placeholder="Subject" style="margin-bottom:15px;">
+								<input type="hidden" name="className" value="teacher">
+								<small th:if="${teacherError}" th:text="${teacherError}" class="form-text text-danger"></small>
+							</div>
+							<p class="card-text text-success" th:if="${teacherMsg}" th:text="${teacherMsg}"></p>
+							<button type="submit" class="btn btn-primary">Add</button>
+						</form>
+					</div>
+				</div>
+
+			</div>
+		</div>
+
+		<br>
+
+		<!-- Display existing data & sort options -->
+		<div class="card w-75" style="padding-left:0;padding-right:0;margin-left:auto;margin-right:auto;display:block;">
+			<div class="card-body">
+				<h5 class="card-title">Data Viewing & Sorting</h5>
+
+				<br>
+
+				<div class="row">
+					<div class="col-sm">
+						<form method="GET" th:action="@{/InheritanceDom}">
+
+							<h6>Student Options</h6>
+
+							<fieldset class="form-group row">
+								<legend class="col-form-label col-sm-2 float-sm-left pt-0">Sort By</legend>
+								<div class="col-sm-10">
+									<div class="form-check">
+										<input class="form-check-input" type="radio" name="studentSortType" id="studentSort1" value="firstName" th:checked="${studentSortType == 'firstName'}">
+										<label class="form-check-label" for="studentSort1">
+											First Name
+										</label>
+									</div>
+									<div class="form-check">
+										<input class="form-check-input" type="radio" name="studentSortType" id="studentSort2" value="lastName" th:checked="${studentSortType == 'lastName'}">
+										<label class="form-check-label" for="studentSort2">
+											Last Name
+										</label>
+									</div>
+									<div class="form-check">
+										<input class="form-check-input" type="radio" name="studentSortType" id="studentSort3" value="age" th:checked="${studentSortType == 'age'}">
+										<label class="form-check-label" for="studentSort3">
+											Age
+										</label>
+									</div>
+									<div class="form-check">
+										<input class="form-check-input" type="radio" name="studentSortType" id="studentSort4" value="grade" th:checked="${studentSortType == 'grade'}">
+										<label class="form-check-label" for="studentSort4">
+											Grade
+										</label>
+									</div>
+								</div>
+							</fieldset>
+							<div class="form-group row">
+								<div class="col-sm-10 offset-sm-2">
+									<div class="form-check">
+										<input class="form-check-input" type="checkbox" id="studentHide" name="hideStudent" th:checked="${hideStudent}">
+										<label class="form-check-label" for="studentHide">
+											Hide
+										</label>
+									</div>
+								</div>
+							</div>
+
+							<h6>Teacher Options</h6>
+
+							<fieldset class="form-group row">
+								<legend class="col-form-label col-sm-2 float-sm-left pt-0">Sort By</legend>
+								<div class="col-sm-10">
+									<div class="form-check">
+										<input class="form-check-input" type="radio" name="teacherSortType" id="teacherSort1" value="firstName" th:checked="${teacherSortType == 'firstName'}">
+										<label class="form-check-label" for="teacherSort1">
+											First Name
+										</label>
+									</div>
+									<div class="form-check">
+										<input class="form-check-input" type="radio" name="teacherSortType" id="teacherSort2" value="lastName" th:checked="${teacherSortType == 'lastName'}">
+										<label class="form-check-label" for="teacherSort2">
+											Last Name
+										</label>
+									</div>
+									<div class="form-check">
+										<input class="form-check-input" type="radio" name="teacherSortType" id="teacherSort3" value="age" th:checked="${teacherSortType == 'age'}">
+										<label class="form-check-label" for="teacherSort3">
+											Age
+										</label>
+									</div>
+									<div class="form-check">
+										<input class="form-check-input" type="radio" name="teacherSortType" id="teacherSort4" value="subject" th:checked="${teacherSortType == 'subject'}">
+										<label class="form-check-label" for="teacherSort4">
+											Subject
+										</label>
+									</div>
+								</div>
+							</fieldset>
+							<div class="form-group row">
+								<div class="col-sm-10 offset-sm-2">
+									<div class="form-check">
+										<input class="form-check-input" type="checkbox" id="teacherHide" name="hideTeacher" th:checked="${hideTeacher}">
+										<label class="form-check-label" for="teacherHide">
+											Hide
+										</label>
+									</div>
+								</div>
+							</div>
+
+							<div class="form-group row">
+								<div class="col-sm-10">
+									<button type="submit" class="btn btn-primary">Modify</button>
+								</div>
+							</div>
+						</form>
+					</div>
+					<div class="col-sm">
+						<table class="table table-striped">
+							<thead>
+								<tr>
+									<th scope="col">Data Details</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr th:each="msg : ${data}">
+									<td th:text="${msg}"></td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+
+
+			</div>
+		</div>
+
+		<br>
+
+		<!-- Bootstrap & JQuery JS -->
+		<div th:replace="fragments/body :: scripts"></div>
+	</body>
+</html>

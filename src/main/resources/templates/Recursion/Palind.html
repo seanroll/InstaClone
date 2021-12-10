@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.w3.org/1999/xhtml" xmlns:th="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+
+    <div th:replace="fragments/header :: head"></div>
+    <div layout:fragment="metadata" th:remove="tag">
+        <title>Sort</title>
+    </div>
+
+</head>
+
+
+<body>
+
+<div th:replace="fragments/body :: navbar"></div>
+<div class="card">
+    <div class="form">
+        <form action="/Palind">
+            <textarea class="form-control" name="inputS" placeholder="Input text here!"></textarea>
+
+            <input type="submit" class="btn btn-primary" name="" value="Go">
+        </form>
+    </div>
+
+
+    <table class="table table-striped" style="margin: auto;">
+
+            <tbody>
+            <tr>
+                <th>Method</th>
+                <th>Answer</th>
+                <th>Time</th>
+            </tr>
+            <tr>
+                <th>Recursive</th>
+                <th th:text = "${PRout}">  </th>
+                <th th:text = "${PRtime}" ></th>
+            </tr>
+            <tr>
+                <th>For Loop</th>
+                <th th:text = "${PLout}"></th>
+                <th th:text = "${PLtime}"></th>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<div th:replace="fragments/body :: scripts"></div>
+</body>
+
+<style>
+
+    .card {
+        width: 600px;
+        padding: 40px;
+        position: absolute;
+        background: #ffffff;
+        border: 1px solid gray;
+        transform: translate(-50%, -93%);
+        top: 50%;
+        left: 50%;
+    }
+
+
+
+
+
+
+
+</style>
+
+</html>

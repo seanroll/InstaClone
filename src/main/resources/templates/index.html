@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org/">
+	<head>
+		<div th:replace="fragments/header :: head"></div>
+		<title>Rain | Home</title>
+	</head>
+	<body>
+		<!-- Navbar -->
+		<div th:replace="fragments/body :: navbar"></div>
+
+		<div class="header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+			<h1 class="display-4">Rain</h1>
+			<hr>
+			<br>
+			<p class="lead">Welcome to Rain's final AP CSA project. Check out our work through the top navigation bar or the cards below!</p>
+		</div>
+
+		<div class="container">
+			<div class="card-deck mb-3 text-center">
+				<div class="card mb-4 box-shadow">
+					<div class="card-header">
+						<h4 class="my-0 font-weight-normal">Image Feed</h4>
+					</div>
+					<div class="card-body d-flex flex-column">
+						<label>A simplistic version of an image-posting board (think Instagram) where you can post images, which are saved under your name and the time/date you made the post.</label>
+						<br>
+						<a class="mt-auto btn btn-lg btn-block btn-outline-primary" href="/feed">Visit</a>
+
+						<br>
+						<label>Want to make a post? Make sure you're logged in! (Note: you don't have to be logged in to view posts.)</label>
+						<br>
+						<a class="mt-auto btn btn-lg btn-block btn-outline-success" href="/addpost">Make A Post</a>
+					</div>
+				</div>
+				<div class="card mb-4 box-shadow">
+					<div class="card-header">
+						<h4 class="my-0 font-weight-normal">Mini-labs</h4>
+					</div>
+					<div class="card-body d-flex flex-column">
+						<label>Check out all of our mini-labs, sorted by team member, in the dropdown menu in the navigation bar up top! They highlight various Java skills we practiced this trimester.</label>
+					</div>
+				</div>
+				<div class="card mb-4 box-shadow">
+					<div class="card-header">
+						<h4 class="my-0 font-weight-normal">REST API</h4>
+					</div>
+					<div class="card-body d-flex flex-column">
+						<label>Allows developers to view data associated with posts, comments, and users in either tabular or JSON format.</label>
+						<a class="mt-auto btn btn-lg btn-block btn-outline-primary" href="/getPost?id=1">Find Posts By ID</a>
+						<br>
+						<a class="mt-auto btn btn-lg btn-block btn-outline-primary" href="/getComments?id=1">Find Comments By ID</a>
+						<br>
+						<a class="mt-auto btn btn-lg btn-block btn-outline-primary" href="/getUser?id=1">Find Users By ID</a>
+						<br>
+						<a class="mt-auto btn btn-lg btn-block btn-outline-primary" href="/searchPost">Find Posts By Phrase</a>
+						<br>
+						<a class="mt-auto btn btn-lg btn-block btn-outline-primary" href="/searchComment">Find Comments By Phrase</a>
+						<br>
+						<label>Interact with our crossover team's (Snake Eye's) REST API!</label>
+						<a class="mt-auto btn btn-lg btn-block btn-outline-success" href="/crossoverAPI">Snake Eyes</a>
+					</div>
+				</div>
+				<div class="card mb-4 box-shadow">
+					<div class="card-header">
+						<h4 class="my-0 font-weight-normal">Misc</h4>
+					</div>
+					<div class="card-body">
+						<label>Odds and ends.</label>
+						<br>
+						<a class="mt-auto btn btn-lg btn-block btn-outline-primary" href="/how">How It's Made</a>
+						<br>
+						<a class="mt-auto btn btn-lg btn-block btn-outline-primary" href="/doodlejump">Easter Egg Game</a>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- Bootstrap & JQuery JS -->
+		<div th:replace="fragments/body :: scripts"></div>
+	</body>
+</html>

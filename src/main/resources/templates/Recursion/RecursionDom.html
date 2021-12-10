@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org/">
+	<head>
+		<div th:replace="fragments/header :: head"></div>
+		<title>Recursion Mini-Lab | Dominic</title>
+	</head>
+	<body>
+		<!-- Navbar -->
+		<div th:replace="fragments/body :: navbar"></div>
+
+		<div class="header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+			<h1 class="display-4">Recursion Mini-Lab | Dominic</h1>
+			<hr>
+			<br>
+		</div>
+
+		<nav class="w-75" style="padding-left:0;padding-right:0;margin-left:auto;margin-right:auto;display:block;">
+			<div class="nav nav-tabs" id="nav-tab" role="tablist">
+				<a th:class="${type == null or type == 'factorial'} ? 'nav-item nav-link active' : 'nav-item nav-link'" id="nav-factorial-tab" data-toggle="tab" href="#nav-factorial" role="tab" aria-controls="nav-factorial" aria-selected="true">Factorial</a>
+				<a th:class="${type == 'fibonacci'} ? 'nav-item nav-link active' : 'nav-item nav-link'" id="nav-fibonacci-tab" data-toggle="tab" href="#nav-fibonacci" role="tab" aria-controls="nav-fibonacci" aria-selected="false">Fibonacci</a>
+				<a th:class="${type == 'gcd'} ? 'nav-item nav-link active' : 'nav-item nav-link'" id="nav-gcd-tab" data-toggle="tab" href="#nav-gcd" role="tab" aria-controls="nav-gcd" aria-selected="false">GCD</a>
+			</div>
+		</nav>
+		<div class="tab-content w-75" id="nav-tabContent" style="padding-left:0;padding-right:0;margin-left:auto;margin-right:auto;display:block;">
+			<div th:class="${type == null or type == 'factorial'} ? 'tab-pane fade show active' : 'tab-pane fade'" id="nav-factorial" role="tabpanel" aria-labelledby="nav-factorial-tab">
+				<br>
+				<div class="card">
+					<div class="card-body">
+						<h5 class="card-title">Factorial Algorithm</h5>
+						<form method="GET" th:action="@{/RecursionDom}">
+							<div class="form-group">
+								<input type="number" class="form-control" name="inputA" placeholder="Enter value" th:value="${fac_input}">
+								<input type="hidden" name="type" value="factorial">
+								<small th:if="${fac_error}" th:text="${fac_error}" class="form-text text-danger"></small>
+							</div>
+							<p class="card-text" th:text="'Input: ' + ${fac_input} + ' | Result: ' + ${fac_result}"></p>
+							<button type="submit" class="btn btn-primary">Submit</button>
+						</form>
+					</div>
+				</div>
+
+				<br>
+
+				<table class="table table-striped" style="margin: auto;">
+					<thead>
+						<tr>
+							<th scope="col">Method</th>
+							<th scope="col">Time (ms)</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>Recursion</td>
+							<td th:text="${fac_recursionTime}"></td>
+						</tr>
+						<tr>
+							<td>For Loop</td>
+							<td th:text="${fac_forLoopTime}"></td>
+						</tr>
+						<tr>
+							<td>Stream</td>
+							<td th:text="${fac_streamTime}"></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			<div th:class="${type == 'fibonacci'} ? 'tab-pane fade show active' : 'tab-pane fade'" id="nav-fibonacci" role="tabpanel" aria-labelledby="nav-fibonacci-tab">
+				<br>
+				<div class="card">
+					<div class="card-body">
+						<h5 class="card-title">Fibonacci Algorithm</h5>
+						<form method="GET" th:action="@{/RecursionDom}">
+							<div class="form-group">
+								<input type="number" class="form-control" name="inputA" placeholder="Enter value" th:value="${fib_input}">
+								<input type="hidden" name="type" value="fibonacci">
+								<small th:if="${fib_error}" th:text="${fib_error}" class="form-text text-danger"></small>
+							</div>
+							<p class="card-text" th:text="'Input: ' + ${fib_input} + ' | Result: ' + ${fib_result}"></p>
+							<button type="submit" class="btn btn-primary">Submit</button>
+						</form>
+					</div>
+				</div>
+
+				<br>
+
+				<table class="table table-striped" style="margin: auto;">
+					<thead>
+						<tr>
+							<th scope="col">Method</th>
+							<th scope="col">Time (ms)</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>Recursion</td>
+							<td th:text="${fib_recursionTime}"></td>
+						</tr>
+						<tr>
+							<td>For Loop</td>
+							<td th:text="${fib_forLoopTime}"></td>
+						</tr>
+						<tr>
+							<td>Stream</td>
+							<td th:text="${fib_streamTime}"></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			<div th:class="${type == 'gcd'} ? 'tab-pane fade show active' : 'tab-pane fade'" id="nav-gcd" role="tabpanel" aria-labelledby="nav-gcd-tab">
+				<br>
+				<div class="card">
+					<div class="card-body">
+						<h5 class="card-title">GCD Algorithm</h5>
+						<form method="GET" th:action="@{/RecursionDom}">
+							<div class="form-group">
+								<input type="number" class="form-control" name="inputA" placeholder="Enter value 1" th:value="${gcd_inputA}">
+								<br>
+								<input type="number" class="form-control" name="inputB" placeholder="Enter value 2" th:value="${gcd_inputB}">
+								<input type="hidden" name="type" value="gcd">
+								<small th:if="${gcd_error}" th:text="${gcd_error}" class="form-text text-danger"></small>
+							</div>
+							<p class="card-text" th:text="'Value 1: ' + ${gcd_inputA} + ' | Value 2: ' + ${gcd_inputB} + ' | Result: ' + ${gcd_result}"></p>
+							<button type="submit" class="btn btn-primary">Submit</button>
+						</form>
+					</div>
+				</div>
+
+				<br>
+
+				<table class="table table-striped" style="margin: auto;">
+					<thead>
+						<tr>
+							<th scope="col">Method</th>
+							<th scope="col">Time (ms)</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>Recursion</td>
+							<td th:text="${gcd_recursionTime}"></td>
+						</tr>
+						<tr>
+							<td>For Loop</td>
+							<td th:text="${gcd_forLoopTime}"></td>
+						</tr>
+						<tr>
+							<td>Stream</td>
+							<td th:text="${gcd_streamTime}"></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+
+			<br>
+		</div>
+
+		<!-- Bootstrap & JQuery JS -->
+		<div th:replace="fragments/body :: scripts"></div>
+	</body>
+</html>

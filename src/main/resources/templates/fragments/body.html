@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+
+<html xmlns:th="https://www.thymeleaf.org/">
+	<body>
+		<!-- Navbar -->
+		<div th:fragment="navbar" class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm">
+			<h5 class="my-0 mr-md-auto font-weight-normal">
+				<a href="./" style="text-decoration: none">AP CSA | Rain</a>
+			</h5>
+			<nav class="my-2 my-md-0 mr-md-3">
+				<!--
+				<a class="p-2 text-dark" href="#">Link 1</a>
+				<a class="p-2 text-dark" href="#">Link 2</a>
+				<a class="p-2 text-dark" href="#">Link 3</a>
+				-->
+				<a class="btn btn-outline-dark" href="/feed">Image Feed</a>
+				<div class="btn-group">
+					<button type="button" class="btn btn-outline-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						Mini-labs
+					</button>
+					<div class="dropdown-menu dropdown-menu-right">
+						<h6 class="dropdown-header">Dominic's Mini-labs</h6>
+						<a class="dropdown-item" href="/RecursionDom">Recursion</a>
+						<a class="dropdown-item" href="/InheritanceDom">Inheritance</a>
+						<a class="dropdown-item" href="/SortDom">Sort</a>
+						<a class="dropdown-item" href="/LLDom">Linked List</a>
+						<div class="dropdown-divider"></div>
+						<h6 class="dropdown-header">Andrew's Mini-labs</h6>
+						<a class="dropdown-item" href="/Factorialh">Factorial</a>
+						<a class="dropdown-item" href="/Palind">Palindrome</a>
+						<a class="dropdown-item" href="/InheritanceAnd">Inheritance</a>
+						<a class="dropdown-item" href="/SortAndrew">Sort</a>
+						<a class="dropdown-item" href="/LLAndrew">Linked List</a>
+						<div class="dropdown-divider"></div>
+						<h6 class="dropdown-header">Jason's Mini-labs</h6>
+						<a class="dropdown-item" href="/BinaryConversion">Binary Conversion</a>
+						<a class="dropdown-item" href="">Linked Lists</a>
+						<a class="dropdown-item" href="/SortJason">Sort</a>
+						<a class="dropdown-item" href="">Inheritance</a>
+						<div class="dropdown-divider"></div>
+						<h6 class="dropdown-header">Sean's Mini-labs</h6>
+						<a class="dropdown-item" href="/InheritanceSean">Animal Inheritance</a>
+						<a class="dropdown-item" href="/Gcd">GCD</a>
+						<a class="dropdown-item" href="/NewtonSqrt">Newton's √</a>
+						<a class="dropdown-item" href="/DigitSum">Digit Sum</a>
+						<a class="dropdown-item" href="/LLSean">Linked List</a>
+						<a class="dropdown-item" href="/SortSean">Sorts</a>
+
+					</div>
+				</div>
+
+
+				<div class="btn-group">
+					<button type="button" class="btn btn-outline-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						Misc
+					</button>
+					<div class="dropdown-menu dropdown-menu-right">
+						<h6 class="dropdown-header">Fun</h6>
+						<a class="dropdown-item" href="/doodlejump">Game</a>
+						<div class="dropdown-divider"></div>
+						<h6 class="dropdown-header">Info</h6>
+						<a class="dropdown-item" href="/how">How it's made</a>
+						<div class="dropdown-divider"></div>
+						<h6 class="dropdown-header">API</h6>
+						<a class="dropdown-item" href="/getPost?id=1">get post</a>
+						<a class="dropdown-item" href="/getUser?id=1">get user</a>
+						<a class="dropdown-item" href="/getComment?id=1">get comment</a>
+						<a class="dropdown-item" href="/searchPost">search post</a>
+						<a class="dropdown-item" href="/searchComment">search comment</a>
+						<div class="dropdown-divider"></div>
+						<h6 class="dropdown-header">Crossover API</h6>
+						<a class="dropdown-item" href="/crossoverAPI">Snake Eyes</a>
+					</div>
+				</div>
+				<!--
+				<div class="btn-group">
+					<button type="button" class="btn btn-outline-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						Testing
+					</button>
+					<div class="dropdown-menu dropdown-menu-right">
+						<a class="dropdown-item" href="/UploadTest">Upload Test</a>
+						<a class="dropdown-item" href="/MainPageDemo">Main Page Demo</a>
+					</div>
+				</div>
+				-->
+			</nav>
+			<nav>
+				<div th:if="${#request.userPrincipal != null}" class="dropdown show">
+					<button th:text="${#request.userPrincipal.name}" class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
+					<div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+						<a class="dropdown-item" href="/addpost">Make Post</a>
+						<div class="dropdown-divider"></div>
+						<form id="logoutForm" method="POST" th:action="@{/logout}">
+							<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+						</form>
+						<a class="dropdown-item" style="cursor:pointer;" onclick="document.forms['logoutForm'].submit()">Logout</a>
+					</div>
+				</div>
+				<a th:if="${#request.userPrincipal == null}" class="btn btn-outline-success" href="/login">Login</a>
+				<a th:if="${#request.userPrincipal == null}" class="btn btn-outline-primary" href="/register">Register</a>
+			</nav>
+		</div>
+
+		<!-- Scripts -->
+		<th:block th:fragment="scripts">
+			<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+			<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+			<script src="js/bootstrap.js"></script>
+		</th:block>
+	</body>
+</html>
+

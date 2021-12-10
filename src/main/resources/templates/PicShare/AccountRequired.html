@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org/">
+	<head>
+		<div th:replace="fragments/header :: head"></div>
+		<title>Account Required</title>
+	</head>
+	<body>
+		<!-- Navbar -->
+		<div th:replace="fragments/body :: navbar"></div>
+
+		<div class="header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+			<h1 class="display-4">Uh Oh!</h1>
+			<hr>
+			<br>
+		</div>
+
+		<nav class="w-75" style="padding-left:0;padding-right:0;margin-left:auto;margin-right:auto;display:block;">
+			<div class="card card-body">
+				<p class="card-text">You're trying to access a page that requires you to be logged in!</p>
+				<a href="/login" class="card-link">Login</a>
+			</div>
+			<br>
+		</nav>
+
+		<!-- Bootstrap & JQuery JS -->
+		<div th:replace="fragments/body :: scripts"></div>
+	</body>
+</html>

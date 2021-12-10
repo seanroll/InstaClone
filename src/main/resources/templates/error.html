@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <div th:replace="fragments/header :: head"></div>
+        <title>Error</title>
+    </head>
+
+    <body>
+
+        <div th:replace="fragments/body :: navbar"></div>
+
+        <div class="header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+            <h1 class="display-4">Uh oh.</h1>
+            <hr>
+            <br>
+            <p class="lead">Something went wrong. Press the back button to return to where you were. Make sure your input was correct.</p>
+        </div>
+
+        <div th:replace="fragments/body :: scripts"></div>
+
+    </body>
+</html>

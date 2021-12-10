@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <div th:replace="fragments/header :: head"></div>
+  <title>Error</title>
+</head>
+
+<body>
+
+<div th:replace="fragments/body :: navbar"></div>
+
+<div class="header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+  <h1 class="display-4">API Error</h1>
+  <hr>
+  <br>
+  <p class="lead">Post/Comment/User at the specified ID does not exist. If you entered here from the navigation bar, then likely no Posts/Comments/Users exist yet.</p>
+</div>
+
+<div th:replace="fragments/body :: scripts"></div>
+
+</body>
+</html>

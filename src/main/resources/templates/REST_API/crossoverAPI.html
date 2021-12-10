@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org/">
+	<head>
+		<div th:replace="fragments/header :: head"></div>
+		<title>Crossover API: Snake Eyes</title>
+	</head>
+	<body>
+		<!-- Navbar -->
+		<div th:replace="fragments/body :: navbar"></div>
+
+		<div class="header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+			<h1 class="display-4">Crossover API: Snake Eyes</h1>
+			<hr>
+			<br>
+			<p>
+				<a href="https://snakeeyes5.herokuapp.com/">Snake Eyes's website </a> provides a number of utilities for AP students, one of which is a platform where you can share study/test tips in the form of units that have content. This interactive crossover API page allows users to view (all or specific), post, and delete study guides on Snake Eye's database.
+			</p>
+		</div>
+
+		<nav class="w-75" style="padding-left:0;padding-right:0;margin-left:auto;margin-right:auto;display:block;">
+			<div class="nav nav-tabs" id="nav-tab" role="tablist">
+				<a class="nav-item nav-link active" id="nav-all-tab" data-toggle="tab" href="#nav-all" role="tab" aria-controls="nav-all" aria-selected="true">All</a>
+				<a class="nav-item nav-link" id="nav-get-tab" data-toggle="tab" href="#nav-get" role="tab" aria-controls="nav-get" aria-selected="false">GET</a>
+				<a class="nav-item nav-link" id="nav-post-tab" data-toggle="tab" href="#nav-post" role="tab" aria-controls="nav-post" aria-selected="false">POST</a>
+				<a class="nav-item nav-link" id="nav-delete-tab" data-toggle="tab" href="#nav-delete" role="tab" aria-controls="nav-delete" aria-selected="false">DELETE</a>
+			</div>
+		</nav>
+		<div class="tab-content w-75" id="nav-tabContent" style="padding-left:0;padding-right:0;margin-left:auto;margin-right:auto;display:block;">
+			<div class="tab-pane fade show active" id="nav-all" role="tabpanel" aria-labelledby="nav-all-tab">
+				<br>
+				<div class="card">
+					<div class="card-body">
+						<h5 class="card-title">Get all study guides</h5>
+						<div class="form-group">
+							<label for="getAllTextArea">JSON Output</label>
+							<textarea class="form-control" id="getAllTextArea" rows="5" readonly></textarea>
+						</div>
+						<button type="submit" class="btn btn-primary" id="refreshAll" onclick="RefreshAll()">Refresh</button>
+					</div>
+				</div>
+			</div>
+			<div class="tab-pane fade" id="nav-get" role="tabpanel" aria-labelledby="nav-get-tab">
+				<br>
+				<div class="card">
+					<div class="card-body">
+						<h5 class="card-title">Get specific study guide by ID</h5>
+						<div class="form-group">
+							<label for="getIDInput">Study Guide ID</label>
+							<input type="number" class="form-control" id="getIDInput">
+						</div>
+						<button type="submit" class="btn btn-primary" id="getSpecific" onclick="GetSpecific()">Get</button>
+						<hr>
+						<div class="form-group">
+							<label for="getSpecificTextArea">JSON Output</label>
+							<textarea class="form-control" id="getSpecificTextArea" rows="5" readonly></textarea>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="tab-pane fade" id="nav-post" role="tabpanel" aria-labelledby="nav-post-tab">
+				<br>
+				<div class="card">
+					<div class="card-body">
+						<h5 class="card-title">Post a study guide</h5>
+						<div class="form-group">
+							<label for="unitInput">Unit</label>
+							<input type="text" class="form-control" id="unitInput">
+
+							<label for="contentInput">Content</label>
+							<textarea class="form-control" id="contentInput" rows="2"></textarea>
+						</div>
+						<button type="submit" class="btn btn-primary" id="postSpecific" onclick="PostSpecific()">Post</button>
+						<small class="form-text text-success" id="postSuccess"></small>
+					</div>
+				</div>
+			</div>
+			<div class="tab-pane fade" id="nav-delete" role="tabpanel" aria-labelledby="nav-delete-tab">
+				<br>
+				<div class="card">
+					<div class="card-body">
+						<h5 class="card-title">Delete a study guide by ID</h5>
+						<div class="form-group">
+							<label for="deleteIDInput">Study Guide ID</label>
+							<input type="number" class="form-control" id="deleteIDInput">
+						</div>
+						<button type="submit" class="btn btn-primary" id="deleteSpecific" onclick="DeleteSpecific()">Delete</button>
+						<small class="form-text text-success" id="deleteSuccess"></small>
+					</div>
+				</div>
+			</div>
+
+			<br>
+		</div>
+
+		<!-- Bootstrap & JQuery JS -->
+		<div th:replace="fragments/body :: scripts"></div>
+
+		<script>
+			var RefreshAllDB = false;
+			function RefreshAll() {
+				if (RefreshAllDB == false) {
+					RefreshAllDB = true;
+					$.get("/_crossoverGetAll", function(data) {
+						document.getElementById("getAllTextArea").textContent = data;
+					});
+					setTimeout(function() {
+						RefreshAllDB = false;
+					}, 3000);
+				}
+			}
+			RefreshAll();
+
+			var GetSpecificDB = false;
+			function GetSpecific() {
+				if (GetSpecificDB == false) {
+					GetSpecificDB = true;
+					$.get("/_crossoverGet/" + document.getElementById("getIDInput").value, function(data) {
+						document.getElementById("getSpecificTextArea").textContent = data;
+					});
+					setTimeout(function() {
+						GetSpecificDB = false;
+					}, 1000);
+				}
+			}
+
+			var PostSpecificDB = false;
+			function PostSpecific() {
+				if (PostSpecificDB == false) {
+					PostSpecificDB = true;
+
+					// unit: document.getElementById("unitInput").value, content: document.getElementById("contentInput").value
+					$.get("/_crossoverPost?unit=" + document.getElementById("unitInput").value + "&content=" + document.getElementById("contentInput").value, function(Data) {
+						document.getElementById("unitInput").value = "";
+						document.getElementById("contentInput").value = "";
+						if (Data == "Crossover API is down.") {
+							document.getElementById("postSuccess").textContent = Data;
+						} else {
+							document.getElementById("postSuccess").textContent = "Successfully made a new post: " + Data;
+						}
+
+					});
+					setTimeout(function() {
+						PostSpecificDB = false;
+					}, 1000);
+				}
+			}
+
+			var DeleteSpecificDB = false;
+			function DeleteSpecific() {
+				if (DeleteSpecificDB == false) {
+					DeleteSpecificDB = true;
+
+					$.get("/_crossoverDelete/" + document.getElementById("deleteIDInput").value, function(Data) {
+						document.getElementById("deleteIDInput").value = "";
+						document.getElementById("deleteSuccess").textContent = Data;
+
+					});
+					setTimeout(function() {
+						DeleteSpecificDB = false;
+					}, 1000);
+				}
+			}
+		</script>
+	</body>
+</html>

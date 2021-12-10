@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title><!DOCTYPE html>
+        <html lang="en" >
+
+        <head>
+            <meta charset="UTF-8">
+            <div th:replace="fragments/header :: head"></div>
+            <div th:remove="tag">
+                <title>Recursive Binary Converter</title>
+            </div>
+
+        </head>
+
+<body>
+<div th:replace="fragments/body :: navbar"></div>
+<div th:replace="fragments/body :: scripts"></div>
+
+
+
+<h2>It *should* take the last digit, and slowly increment while adding(I hope the html works properly, I have yet to find a way to properly test it)</h2>
+
+
+<div class="form">
+    <form action="/Binaryconvert" class="box"  method="get">
+        <h1>Put argument here</h1>
+        <input name="binary" type="text" placeholder="number">
+        <input type="submit" name="" value="Go">
+        <h1>
+            <p th:text = "${output}"></p>
+        </h1>
+    </form>
+</div>
+
+
+</body>
+
+<style>
+
+    body{
+        margin: 0;
+        padding: 0;
+        font-family: sans-serif;
+        background: #34495e;
+    }
+
+    div.form
+    {
+        display: block;
+        text-align: center;
+        position: static;
+    }
+
+    form
+    {
+        display: inline-block;
+        margin-left: auto;
+        margin-right: auto;
+        text-align: left;
+    }
+
+    .box {
+
+        width: 400px;
+        padding: 40px;
+        position: static;
+        top: 50%;
+        left: 50%;
+        background: #191919;
+        text-align: center;
+    }
+
+    h1{
+        color:white;
+        font-weight: 400;
+        font-size: 30px;
+    }
+
+    h2{
+        color:white;
+        font-weight: 400;
+        font-size: 20px;
+    }
+
+    .box input[type = "text"] {
+        border: 0;
+        background: none;
+        display: block;
+        margin: 20px auto;
+        text-align: center;
+        border: 2px solid #3498db;
+        padding: 14px 10px;
+        width: 200px;
+        outline: none;
+        color: white;
+        border-radius: 0px;
+        transition: 0.25s;
+
+    }
+    .box input[type = "text"]:focus {
+        width: 280px;
+        border-color: #2ecc71;
+    }
+
+    .box input[type = "submit"] {
+        border: 0;
+        background: none;
+        display: block;
+        margin: 20px auto;
+        text-align: center;
+        border: 2px solid #2ecc71;
+        padding: 14px 40px;
+        outline: none;
+        color: white;
+        border-radius: 24px;
+        transition: 0.25s;
+        cursor: pointer;
+    }
+    .box input[type = "submit"]:hover{
+        background: #2ecc71;
+    }
+
+    div.code{
+        margin-top: 75px;
+        margin-left: 50px;
+        margin-right: 50px;
+    }
+
+</style>
+
+</html></title>
+</head>
+<body>
+
+</body>
+</html>

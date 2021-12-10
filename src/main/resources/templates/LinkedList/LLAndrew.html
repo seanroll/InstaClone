@@ -1,0 +1,88 @@
+<!DOCTYPE HTML>
+<html xmlns:layout="http://www.w3.org/1999/xhtml" xmlns:th="http://www.w3.org/1999/xhtml" lang="en">
+
+<style>
+
+    .tab{float: left;}
+    .tab-2{margin-left: 200px;}
+    .tab-2 input{display: block;}
+    .tab-2 button{margin-right: 200px;}
+
+
+    .otab{float: left}
+    .otab{margin-left: 400px;}
+    .otab input{display: block;}
+
+
+</style>
+
+
+<head>
+
+    <div th:replace="fragments/header :: head"></div>
+    <div layout:fragment="metadata" th:remove="tag">
+        <title>LLAndrew</title>
+    </div>
+
+</head>
+
+<body>
+<div th:replace="fragments/body :: navbar"></div>
+<div class="tab tab-2">
+    <form action="/LLAndrew">
+        <input type="text" name="name">
+        <input type="text" name="age">
+
+</div>
+<div>
+    <input type="radio" name="option" id="tail" value="tail">
+    <label for="tail">tail</label>
+    <input type="radio" name="option" id="mid" value="mid">
+    <label for="mid">mid</label>
+    <input type="radio" name="option" id="head" value="head">
+    <label for="head">head</label>
+</div>
+
+
+<button name="AoD" value="Add">Add</button>
+<button name="AoD" value="Del">Delete</button>
+<button name="AoD" value="Sort">Sort</button>
+</form>
+
+<div class="container">
+
+<table border="1" class="table">
+    <tr>
+        <th>Linked List</th>
+        <th>Time</th>
+    </tr>
+
+    <tr th:each="line: ${LL}">
+        <td th:text="${line.toString()}" ></td>
+        <td th:text = "${timeL}"></td>
+    </tr>
+</table>
+
+
+    <table class="table">
+        <tr>
+            <th>Array List</th>
+        </tr>
+
+        <tr th:each="line: ${AL}">
+            <td th:text="${line.toString()}" ></td>
+            <td th:text = "${timeA}"></td>
+        </tr>
+    </table>
+
+
+
+
+</div>
+
+<div th:replace="fragments/body :: scripts"></div>
+
+</body>
+
+
+</html>

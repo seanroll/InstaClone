@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <div th:replace="fragments/header :: head"></div>
+    <title>Square Roots via Newton's Method</title>
+</head>
+
+<body>
+
+<div th:replace="fragments/body :: navbar"></div>
+<div th:replace="fragments/body :: scripts"></div>
+
+<div class="header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+    <h1 class="display-4">Square Roots via Newton's Method | Sean</h1>
+</div>
+
+<div style="padding-left:0;padding-right:0;margin-left:12.5%;margin-right:12.5%;margin-bottom:auto;display:block;">
+    <h3>How does this recursion work?</h3>
+    <h4>It uses newton's method to get a successively better approximation of the square root of the target.
+    The result of the approximation is a guess that is then used to create another guess using calculus.
+    This repeats until the user is satisfied with the answer (sufficiently low error).</h4>
+</div>
+
+<hr>
+
+<div class="card w-75" style="padding-left:0;padding-right:0;margin-left:auto;margin-right:auto;margin-bottom:auto;display:block;">
+    <div class="card-body">
+        <div class="form">
+            <h5 class="card-title">Put argument here</h5>
+            <form action="/NewtonSqrt" class="box"  method="get">
+                <input class="form-control" name="newtonsqrt" type="text" placeholder="number" style="margin-bottom:15px;">
+                <input type="submit"  class="btn btn-primary" name="" value="Go">
+            </form>
+        </div>
+    </div>
+</div>
+
+<hr>
+
+<div class="card w-75" style = "padding-left:0;padding-right:0;margin-left:auto;margin-right:auto;margin-bottom:auto;display:block;">
+    <div class="card-body">
+        <h5 class="card-title">Calculated Data</h5>
+        <table class="table table-striped" style = "margin: auto;">
+            <tr>
+                <td>Argument</td>
+                <td>Calculated Square Root</td>
+                <td>Actual Square Root</td>
+            </tr>
+            <tr>
+                <td th:text = "${input}"></td>
+                <td th:text = "${output}"></td>
+                <td th:text = "${realSqrt}"></td>
+            </tr>
+        </table>
+    </div>
+</div>
+
+<hr>
+
+<div class="code" style="margin-left: 12.5%; margin-right: 12.5%">
+    <script src="https://gist.github.com/banditcat12/809462c13ed20985779cdda4cc3f17c0.js"></script>
+</div>
+
+</body>
+</html>

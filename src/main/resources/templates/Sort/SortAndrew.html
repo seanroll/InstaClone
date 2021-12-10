@@ -1,0 +1,125 @@
+<!DOCTYPE HTML>
+<html xmlns:layout="http://www.w3.org/1999/xhtml" xmlns:th="http://www.w3.org/1999/xhtml" lang="en">
+
+
+<head>
+
+    <div th:replace="fragments/header :: head"></div>
+    <div layout:fragment="metadata" th:remove="tag">
+        <title>Sort</title>
+    </div>
+
+</head>
+
+<style>
+    button {
+        font-family: sans-serif;
+        border-radius: 12px;
+        width: 100px;
+
+    }
+
+    table {
+        font-family: arial, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    td, th {
+        border: 1px solid #cccccc;
+        padding: 8px;
+    }
+
+    th {
+        font-weight: bold;
+        text-transform: uppercase;
+    }
+
+</style>
+
+<body>
+<div th:replace="fragments/body :: navbar"></div>
+<div class="form">
+<form action="/SortAndrew2" method="get">
+    <div>
+
+<button class="btn btn-primary" style="padding-left:0;padding-right:0; margin-left:auto ;margin-right:auto;display:block;">Sort</button>
+    </div>
+</form>
+</div>
+
+<div class="tab-content w-75" style="padding-left:0;padding-right:0;
+margin-left:auto;margin-right:auto;display:block;">
+<table class="table table-striped" style="margin: auto;">
+    <thead>
+    <tr>
+        <th scope="col">Sort</th>
+        <th scope="col">Complication</th>
+        <th scope="col">TimeInt</th>
+        <th scope="col">TimeString</th>
+    </tr>
+    </thead>
+    <tbody>
+     <tr>
+         <td>Insertion</td>
+         <td> </td>
+     </tr>
+     <tr>
+         <td>Bubble</td>
+         <td> </td>
+     </tr>
+     <tr>
+         <td>Select</td>
+         <td> </td>
+
+     </tr>
+    </tbody>
+</table>
+
+<table class="table table-striped" style="margin: auto;">
+    <thead>
+        <tr>
+            <th scope="col">Integer</th>
+        </tr>
+    </thead>
+
+    <tr th:each="line: ${intA}">
+        <td th:text="${line.toString()}" ></td>
+    </tr>
+
+</table>
+
+<table class="table table-striped" style="margin: auto;">
+    <thead>
+    <tr>
+        <th scope="col">String</th>
+    </tr>
+    </thead>
+
+    <tr th:each="line: ${strA}">
+        <td th:text="${line.toString()}" ></td>
+    </tr>
+</table>
+
+
+<table class="table table-striped" style="margin: auto;">
+    <thead>
+    <tr>
+        <th scope="col">String</th>
+    </tr>
+    </thead>
+
+    <tr th:each="line: ${objA}">
+        <td th:text="${line.toString()}" ></td>
+    </tr>
+</table>
+
+
+
+<div th:replace="fragments/body :: scripts"></div>
+</div>
+
+</body>
+
+
+</html>

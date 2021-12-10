@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <div th:replace="fragments/header :: head"></div>
+        <title>User</title>
+    </head>
+
+    <body>
+
+        <div th:replace="fragments/body :: scripts"></div>
+        <div th:replace="fragments/body :: navbar"></div>
+
+        <div class="card w-75" style="padding-left:0;padding-right:0;margin-left:auto;margin-right:auto;margin-bottom:auto;display:block;">
+            <div class="card-body">
+                <div class="form">
+                    <form method="GET" th:action="@{/getUser}">
+                        <h5 class="card-title">Search for the user the following ID:</h5>
+                        <input class="form-control" name="id" type="text" placeholder="ID" style="margin-bottom:15px;">
+                        <input type="submit"  class="btn btn-primary" name="" value="Go">
+                        <h6 class="card-text">To access raw JSON data, add an underscore "_" right after ".net/" to the current URL</h6>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <br>
+
+        <div class="card w-75" style="padding-left:0;padding-right:0;margin-left:auto;margin-right:auto;display:block;">
+            <div class="card-body">
+                <h5 class="card-title">User Data</h5>
+	            <div class="table-responsive">
+		            <table class="table table-striped" style = "margin: auto;">
+			            <thead>
+				            <tr>
+					            <th scope="col">ID</th>
+					            <th scope="col">Username</th>
+					            <th scope="col">Post IDs</th>
+					            <th scope="col">Comment IDs</th>
+				            </tr>
+			            </thead>
+			            <tbody>
+				            <tr>
+					            <td th:text="${userData.getId()}">...</td>
+					            <td th:text="${userData.getUsername()}">...</td>
+					            <td th:text="${userData.getPosts()}">...</td>
+					            <td th:text="${userData.getComments()}">...</td>
+				            </tr>
+			            </tbody>
+		            </table>
+	            </div>
+            </div>
+        </div>
+
+        <br>
+
+
+    </body>
+</html>

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <div th:replace="fragments/header :: head"></div>
+        <title>Post</title>
+    </head>
+
+    <body>
+
+        <div th:replace="fragments/body :: scripts"></div>
+        <div th:replace="fragments/body :: navbar"></div>
+
+
+        <div class="card w-75" style="padding-left:0;padding-right:0;margin-left:auto;margin-right:auto;margin-bottom:auto;display:block;">
+            <div class="card-body">
+                <div class="form">
+                    <form method="GET" th:action="@{/getPost}">
+                        <h5 class="card-title">Search for the post the following ID:</h5>
+                        <input class="form-control" name="id" type="text" placeholder="ID" style="margin-bottom:15px;">
+                        <input type="submit"  class="btn btn-primary" name="" value="Go">
+                        <h6 class="card-text">To access raw JSON data, add an underscore "_" right after ".net/" to the current URL</h6>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <br>
+
+        <div class="card w-75" style="padding-left:0;padding-right:0;margin-left:auto;margin-right:auto;display:block;">
+            <div class="card-body">
+                <h5 class="card-title">Post Data</h5>
+	            <div class="table-responsive">
+		            <table class="table table-striped" style = "margin: auto;">
+			            <thead>
+				            <tr>
+					            <th scope="col">ID</th>
+					            <th scope="col">Picture Data (truncated)</th>
+					            <th scope="col">Caption</th>
+					            <th scope="col">Post</th>
+					            <th scope="col">Comment IDs</th>
+					            <th scope="col">Unix Timestamp</th>
+					            <th scope="col">Date</th>
+				            </tr>
+			            </thead>
+			            <tbody>
+				            <tr>
+					            <td th:text="${postData.getId()}">...</td>
+					            <td th:text="${postData.getPictureData()}">...</td>
+					            <td th:text="${postData.getCaption()}">...</td>
+					            <td th:text="${postData.getOwnerUsername()}">...</td>
+					            <td th:text="${postData.getComments()}">...</td>
+					            <td th:text="${postData.getUnixTimestamp()}">...</td>
+					            <td th:text="${postData.getDate()}">...</td>
+				            </tr>
+			            </tbody>
+		            </table>
+	            </div>
+            </div>
+        </div>
+
+        <br>
+
+
+
+    </body>
+</html>

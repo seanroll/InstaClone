@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org/">
+	<head>
+		<div th:replace="fragments/header :: head"></div>
+		<title>Sort Mini-Lab | Dominic</title>
+		<link rel="stylesheet" href="../../static/css/bootstrap.css">
+	</head>
+	<body>
+		<!-- Navbar -->
+		<div th:replace="fragments/body :: navbar"></div>
+
+		<div class="header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+			<h1 class="display-4">Sort Mini-Lab | Dominic</h1>
+			<hr>
+			<br>
+		</div>
+
+		<script>
+			function genRandomInt(Max) {
+				return Math.floor(Math.random() * Max);
+			}
+			function genRandomIntStr(Amount) {
+				let Text = "";
+				for (let i = 1; i <= Amount; ++i) {
+					Text += genRandomInt(10000) + (i == Amount ? "" : ",");
+				}
+				document.getElementById("integerInput").textContent = Text;
+			}
+
+			// https://stackoverflow.com/a/19964557
+			function genRandomString(CharCount) {
+				let Alpha = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+				return Array(CharCount).join().split(',').map(function() { return Alpha.charAt(Math.floor(Math.random() * Alpha.length)); }).join('');
+			}
+
+			function getRandomStringsStr(Amount) {
+				let Text = "";
+				for (let i = 1; i <= Amount; ++i) {
+					Text += genRandomString(genRandomInt(20) + 1) + (i == Amount ? "" : ",");
+				}
+				document.getElementById("stringInput").textContent = Text;
+			}
+
+			function generateRandomPersons(Amount) {
+				let Persons = [];
+				for (let i = 1; i <= Amount; ++i) {
+					let PersonObj = {
+						firstname: genRandomString(genRandomInt(20) + 1),
+						lastname: genRandomString(genRandomInt(20) + 1),
+						age: genRandomInt(100) + 1
+					};
+					Persons.push(PersonObj);
+				}
+				document.getElementById("personInput").textContent = JSON.stringify(Persons);
+			}
+		</script>
+
+		<nav class="w-75" style="padding-left:0;padding-right:0;margin-left:auto;margin-right:auto;display:block;">
+			<div class="nav nav-tabs" id="nav-tab" role="tablist">
+				<a th:class="${dataType == null or dataType == 'integer'} ? 'nav-item nav-link active' : 'nav-item nav-link'" id="nav-integer-tab" data-toggle="tab" href="#nav-integer" role="tab" aria-controls="nav-integer" aria-selected="true">Integer</a>
+				<a th:class="${dataType == 'string'} ? 'nav-item nav-link active' : 'nav-item nav-link'" id="nav-string-tab" data-toggle="tab" href="#nav-string" role="tab" aria-controls="nav-string" aria-selected="false">String</a>
+				<a th:class="${dataType == 'person'} ? 'nav-item nav-link active' : 'nav-item nav-link'" id="nav-person-tab" data-toggle="tab" href="#nav-person" role="tab" aria-controls="nav-person" aria-selected="false">Person (Object)</a>
+			</div>
+		</nav>
+		<div class="tab-content w-75" id="nav-tabContent" style="padding-left:0;padding-right:0;margin-left:auto;margin-right:auto;display:block;">
+			<div th:class="${dataType == null or dataType == 'integer'} ? 'tab-pane fade show active' : 'tab-pane fade'" id="nav-integer" role="tabpanel" aria-labelledby="nav-integer-tab">
+				<br>
+				<div class="card">
+					<div class="card-body clearfix">
+						<h5 class="card-title">Integer Sort</h5>
+						<form method="POST" th:action="@{/SortDom}">
+							<div class="form-group">
+								<textarea class="form-control" id="integerInput" name="data" placeholder="Enter data in the format number,number,number" th:text="${intError} ? ${input} : null"></textarea>
+								<input type="hidden" name="dataType" value="integer">
+								<small th:if="${intError}" th:text="${intError}" class="form-text text-danger"></small>
+							</div>
+							<button type="submit" class="btn btn-primary">Submit</button>
+
+							<button type="button" class="btn btn-outline-dark float-right" onclick="genRandomIntStr(1000);">Generate 1000</button>
+							<button type="button" class="btn btn-outline-dark float-right mr-1" onclick="genRandomIntStr(100);">Generate 100</button>
+							<button type="button" class="btn btn-outline-dark float-right mr-1" onclick="genRandomIntStr(10);">Generate 10</button>
+						</form>
+
+					</div>
+				</div>
+			</div>
+			<div th:class="${dataType == 'string'} ? 'tab-pane fade show active' : 'tab-pane fade'" id="nav-string" role="tabpanel" aria-labelledby="nav-string-tab">
+				<br>
+				<div class="card">
+					<div class="card-body">
+						<h5 class="card-title">String Sort</h5>
+						<form method="POST" th:action="@{/SortDom}">
+							<div class="form-group">
+								<textarea class="form-control" id="stringInput" name="data" placeholder="Enter data in the format string,string,string" th:text="${stringError} ? ${input} : null"></textarea>
+								<input type="hidden" name="dataType" value="string">
+								<small th:if="${stringError}" th:text="${stringError}" class="form-text text-danger"></small>
+							</div>
+							<button type="submit" class="btn btn-primary">Submit</button>
+
+							<button type="button" class="btn btn-outline-dark float-right" onclick="getRandomStringsStr(1000);">Generate 1000</button>
+							<button type="button" class="btn btn-outline-dark float-right mr-1" onclick="getRandomStringsStr(100);">Generate 100</button>
+							<button type="button" class="btn btn-outline-dark float-right mr-1" onclick="getRandomStringsStr(10);">Generate 10</button>
+
+						</form>
+					</div>
+				</div>
+			</div>
+			<div th:class="${dataType == 'person'} ? 'tab-pane fade show active' : 'tab-pane fade'" id="nav-person" role="tabpanel" aria-labelledby="nav-person-tab">
+				<br>
+				<div class="card">
+					<div class="card-body">
+						<h5 class="card-title">Person (Object) Sort</h5>
+						<form method="POST" th:action="@{/SortDom}">
+							<div class="form-group">
+								<textarea class="form-control" id="personInput" name="data" placeholder="Enter data in the JSON format [{&quot;firstname&quot;:&quot;person1&quot;,&quot;lastname&quot;:&quot;person1&quot;,&quot;age&quot;:123},{&quot;firstname&quot;:&quot;person2&quot;,&quot;lastname&quot;:&quot;person2&quot;,&quot;age&quot;:123}]" th:text="${personError} ? ${input} : null"></textarea>
+								<input type="hidden" name="dataType" value="person">
+								<small th:if="${personError}" th:text="${personError}" class="form-text text-danger"></small>
+							</div>
+							<button type="submit" class="btn btn-primary">Submit</button>
+
+							<button type="button" class="btn btn-outline-dark float-right" onclick="generateRandomPersons(1000);">Generate 1000</button>
+							<button type="button" class="btn btn-outline-dark float-right mr-1" onclick="generateRandomPersons(100);">Generate 100</button>
+							<button type="button" class="btn btn-outline-dark float-right mr-1" onclick="generateRandomPersons(10);">Generate 10</button>
+
+						</form>
+					</div>
+				</div>
+			</div>
+
+			<hr th:if="${results}">
+
+			<br th:if="${results}">
+
+			<table class="table table-striped" style="margin: auto;" th:if="${results}">
+				<thead>
+					<tr>
+						<th scope="col">Sort Algorithm</th>
+						<th scope="col">Worst Complexity</th>
+						<th scope="col">Best Complexity</th>
+						<th scope="col">Average Complexity</th>
+						<th scope="col">Time (ms)</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>Bubble Sort</td>
+						<td>O(N&sup2;)</td>
+						<td>O(N)</td>
+						<td>O(N&sup2;)</td>
+						<td th:text="${bubbleTime}"></td>
+					</tr>
+					<tr>
+						<td>Insertion Sort</td>
+						<td>O(N&sup2;)</td>
+						<td>O(N)</td>
+						<td>O(N&sup2;)</td>
+						<td th:text="${insertionTime}"></td>
+					</tr>
+					<tr>
+						<td>Selection Sort</td>
+						<td>O(N&sup2;)</td>
+						<td>O(N&sup2;)</td>
+						<td>O(N&sup2;)</td>
+						<td th:text="${selectionTime}"></td>
+					</tr>
+				</tbody>
+			</table>
+
+			<br th:if="${results}">
+
+			<p th:if="${bestSort}" th:text="${'Best Sort: ' + bestSort}"></p>
+
+			<br th:if="${results}">
+
+			<button th:if="${results}" type="button" class="btn btn-outline-primary" data-toggle="collapse" href="#collapseInput" aria-expanded="true" aria-controls="collapseInput">Toggle Input</button>
+			<button th:if="${results}" type="button" class="btn btn-outline-primary" data-toggle="collapse" href="#collapseRawOutput" aria-expanded="true" aria-controls="collapseRawOutput">Toggle Raw Output</button>
+			<button th:if="${results}" type="button" class="btn btn-outline-primary" data-toggle="collapse" href="#collapseFormattedOutput" aria-expanded="true" aria-controls="collapseFormattedOutput">Toggle Formatted Output</button>
+
+			<br th:if="${results}">
+			<br th:if="${results}">
+
+			<div class="collapse multi-collapse show" id="collapseInput" th:if="${results}">
+				<div class="card card-body">
+					<h6 class="card-subtitle mb-2 text-muted">Input</h6>
+					<p class="card-text" th:text="${input}" style="word-wrap: break-word; white-space: pre-wrap;"></p>
+				</div>
+			</div>
+
+			<br th:if="${results}">
+
+			<div class="collapse multi-collapse show" id="collapseRawOutput" th:if="${results}">
+				<div class="card card-body">
+					<h6 class="card-subtitle mb-2 text-muted">Raw Output (Sorted)</h6>
+					<p class="card-text" th:text="${rawResults}" style="word-wrap: break-word; white-space: pre-wrap;"></p>
+				</div>
+			</div>
+
+			<br th:if="${results}">
+
+			<div class="collapse multi-collapse show" id="collapseFormattedOutput" th:if="${results}">
+				<div class="card card-body">
+					<h6 class="card-subtitle mb-2 text-muted">Formatted Output (Sorted)</h6>
+					<table class="table table-striped">
+						<tbody>
+							<tr th:each="msg : ${results}">
+								<td th:text="${msg}" style="white-space: pre;"></td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+
+		<br>
+
+		<!-- Bootstrap & JQuery JS -->
+		<div th:replace="fragments/body :: scripts"></div>
+	</body>
+</html>

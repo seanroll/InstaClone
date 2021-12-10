@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <textarea id="input" name="inputarea"></textarea>
+    <br>
+    <p><input type="file"  accept="image/*" name="image" id="file"  onchange="loadFile(event)" ></p>
+    <p><img id="out"  /></p>
+    <button type="button" id="submission" name = "submitbutton" onclick="Post()">Post</button>
+    <button type="button" id="delete" name = "deletion" onclick="Delete()">Delete</button>
+
+    <p id="output">
+        Posted Information:
+    </p>
+    <script>
+        function Post(){
+            var input = '\xa0\xa0\xa0\xa0' + document.getElementById("input").value ;
+            var para = document.createElement("p");
+            var text = document.createTextNode(input);
+            para.appendChild(text);
+            document.getElementById("output").appendChild(para);
+            document.getElementById("input").value = "";
+        }
+        function Delete(){
+            document.getElementById("output").remove();
+        }
+        var loadFile = function(event) {
+	        var image = document.getElementById('out');
+	        image.src = URL.createObjectURL(event.target.files[0]);
+        };
+
+    </script>
+</body>
+</html>

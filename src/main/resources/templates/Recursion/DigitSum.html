@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <div th:replace="fragments/header :: head"></div>
+    <title>Recursive Digit Sum</title>
+</head>
+
+<body>
+
+<div th:replace="fragments/body :: navbar"></div>
+<div th:replace="fragments/body :: scripts"></div>
+
+
+<div class="header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+    <h1 class="display-4">Digit Sum | Sean</h1>
+</div>
+
+<div style="padding-left:0;padding-right:0;margin-left:12.5%;margin-right:12.5%;margin-bottom:auto;display:block;">
+    <h3>How does this recursion work?</h3>
+    <h4>It takes the leftmost digit of the number, then adds it to the digit sum of the number to the right.</h4>
+</div>
+
+<div class="card w-75" style="padding-left:0;padding-right:0;margin-left:auto;margin-right:auto;margin-bottom:auto;display:block;">
+    <div class = card-body>
+        <h5 class="card-title">Put argument here</h5>
+        <div class="form">
+            <form action="/DigitSum" class="box"  method="get">
+                <input name="digitsum" type="text" placeholder="number" class="form-control" style="margin-bottom: 15px">
+                <input type="submit" name="" value="Go" class="btn btn-primary">
+                <h1>
+                    <p th:text = "${output}"></p>
+                </h1>
+            </form>
+        </div>
+    </div>
+</div>
+
+<hr>
+
+<div class="code" style="margin-left: 12.5%; margin-right: 12.5%">
+    <script src="https://gist.github.com/banditcat12/dab01300b4d775d460a81f8e83ec50c2.js"></script>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org/">
+	<head>
+		<meta charset="UTF-8">
+		<div th:replace="fragments/header :: head"></div>
+		<title>How It's Made</title>
+	</head>
+	<body>
+
+		<div th:replace="fragments/body :: scripts"></div>
+		<div th:replace="fragments/body :: navbar"></div>
+
+		<div class="header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+			<h1 class="display-4">How It's Made</h1>
+			<hr>
+			<br>
+		</div>
+
+		<style>
+			/* Limit height. Show scrollbars when exceeding height */
+			.gist .blob-wrapper.data {
+				max-height:300px;
+				overflow:auto;
+			}
+		</style>
+
+		<nav class="w-75" style="padding-left:0;padding-right:0;margin-left:auto;margin-right:auto;display:block;">
+			<div class="card-header">
+				<ul class="nav nav-tabs card-header-tabs">
+					<li class="nav-item">
+						<a class="nav-link active" id="nav-about-tab" data-toggle="tab" href="#nav-about" role="tab" aria-controls="nav-about" aria-selected="true">About</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" id="nav-creation-tab" data-toggle="tab" href="#nav-creation" role="tab" aria-controls="nav-creation" aria-selected="false">Creation Process</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" id="nav-code-tab" data-toggle="tab" href="#nav-code" role="tab" aria-controls="nav-code" aria-selected="false">Code Snippets (Technicals)</a>
+					</li>
+				</ul>
+			</div>
+			<div class="card-body">
+				<div class="tab-content" id="nav-tabContent">
+					<div class="tab-pane fade show active" id="nav-about" role="tabpanel" aria-labelledby="nav-about-tab">
+						<p class="card-text">This website was created in <strong>Java</strong> using the <strong>Spring Boot</strong> framework, along with additions such as <strong>Thymeleaf</strong> (front-end to back-end integration) and <strong>Bootstrap</strong> (HTML page styling and responsiveness).</p>
+						<ul class="list-group-flush">
+							<li class="card-text"><strong>Main project:</strong> Our main project is an image hosting and sharing site similar to Instagram. After registering for an account, users can post images to be viewed on the image feed, as well as comments that can be posted on others' posts. Posts and comments can also be deleted by users.</li>
+							<li class="card-text"><strong>Mini-labs:</strong> Each team member has worked on their own set of mini-labs, with each demonstrating a specific competency in Java/CS principles.</li>
+							<li class="card-text"><strong>REST API:</strong> Developers have the ability to view data associated with posts, comments, and users via custom-created endpoints in either a tabular format or a JSON format. The Misc tab provides a number of pages where users can visualize our data in a tabular format; users can also interact with the REST API of Snake Eyes, our crossover team.</li>
+							<li class="card-text"><strong>Misc:</strong> Other components of our project include our doodle jump game and this “how it’s made” page.</li>
+						</ul>
+						<p style="text-align:center;">
+							<iframe width="560" height="315" src="https://www.youtube.com/embed/MAHcWIJ0Cog" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+						</p>
+						</div>
+					<div class="tab-pane fade" id="nav-creation" role="tabpanel" aria-labelledby="nav-creation-tab">
+						<p class="card-text">
+							Our project was worked on collaboratively and asynchronously via the version control platform GitHub and the code processor IntelliJ.
+
+							On GitHub, we maintain a readme file detailing various technicals and completions, as well as a scrum board, which allowed us to plan and coordinate tasks.
+						</p>
+						<h6 class="card-title">Readme: <a href="https://github.com/domph/p1-rain#readme">Link</a></h6>
+						<h6 class="card-title">Scrum Board: <a href="https://github.com/domph/p1-rain/projects/1">Link</a></h6>
+					</div>
+					<div class="tab-pane fade" id="nav-code" role="tabpanel" aria-labelledby="nav-code-tab">
+						<h5 class="card-title">Main Section Example #1: User Controller</h5>
+						<p class="card-text">This file consists of all the endpoints related to the main project, ranging from creating an account to deleting a post. We make use of a variety of different mappings (POST, GET), some with PathVariables and others with RequestParams. This file has a number of dependencies (e.g. UserService, SecurityService) that handle database interaction and user session login.</p>
+						<script src="https://gist.github.com/domph/24c56090360dca83e0fe606eb756ccac.js"></script>
+
+						<h5 class="card-title">Main Section Example #2: Post Model</h5>
+						<p class="card-text">This file highlights the Post POJO, which is specifically set up to be used in our database, that is a centerpiece for our main project. It consists of fields including the ID of comments linked to it and the time it was posted. We make use of the CLOB data type to store long strings in our database (as opposed to strings, which are limited to 255 characters).</p>
+						<script src="https://gist.github.com/domph/2db116bcb7d8721c89ae62dce771b719.js"></script>
+
+						<h5 class="card-title">REST API Example: REST API Controller</h5>
+						<p class="card-text">This file consists of all the endpoints related to the REST API—both for our REST API (that exposes information to be viewed by developers regarding posts, comments, and users) and that of our crossover group’s API. For our REST API, the endpoints prefixed with an underscore return JSON information, while those not return information optimized for our interactive, tabular viewer.</p>
+						<script src="https://gist.github.com/domph/f06e65bac435c3182f0bd03b293299b3.js"></script>
+
+						<h5 class="card-title">Mini-lab Example: GCD</h5>
+						<p class="card-text">This class contains a recursive algorithm to calculate the greatest common divisor between two integers.</p>
+						<script src="https://gist.github.com/domph/1dfcd88dea66fe8425d4291439e89adb.js"></script>
+					</div>
+				</div>
+
+			</div>
+		</nav>
+	</body>
+</html>

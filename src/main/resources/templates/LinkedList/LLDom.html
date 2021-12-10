@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org/">
+	<head>
+		<div th:replace="fragments/header :: head"></div>
+		<title>Linked List Mini-Lab | Dominic</title>
+		<link rel="stylesheet" href="../../static/css/bootstrap.css">
+	</head>
+	<body>
+		<!-- Navbar -->
+		<div th:replace="fragments/body :: navbar"></div>
+
+		<div class="header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+			<h1 class="display-4">Linked List Mini-Lab | Dominic</h1>
+			<hr>
+			<br>
+		</div>
+
+		<nav class="w-75" style="padding-left:0;padding-right:0;margin-left:auto;margin-right:auto;display:block;">
+			<div class="nav nav-tabs" id="nav-tab" role="tablist">
+				<a th:class="${op == null or op == 'insert'} ? 'nav-item nav-link active' : 'nav-item nav-link'" id="nav-insert-tab" data-toggle="tab" href="#nav-insert" role="tab" aria-controls="nav-insert" aria-selected="true">Insert</a>
+				<a th:class="${op == 'delete'} ? 'nav-item nav-link active' : 'nav-item nav-link'" id="nav-delete-tab" data-toggle="tab" href="#nav-delete" role="tab" aria-controls="nav-delete" aria-selected="false">Delete</a>
+				<a th:class="${op == 'sort'} ? 'nav-item nav-link active' : 'nav-item nav-link'" id="nav-sort-tab" data-toggle="tab" href="#nav-sort" role="tab" aria-controls="nav-sort" aria-selected="false">Sort</a>
+			</div>
+		</nav>
+		<div class="tab-content w-75" id="nav-tabContent" style="padding-left:0;padding-right:0;margin-left:auto;margin-right:auto;display:block;">
+			<div th:class="${op == 'insert'} ? 'tab-pane fade show active' : 'tab-pane fade'" id="nav-insert" role="tabpanel" aria-labelledby="nav-insert-tab">
+				<br>
+				<div class="card">
+					<div class="card-body clearfix">
+						<h5 class="card-title">Insert Options</h5>
+						<form method="GET" th:action="@{/LLDom}">
+
+							<fieldset class="form-group row">
+								<legend class="col-form-label col-sm-2 float-sm-left pt-0">Location</legend>
+								<div class="col-sm-10">
+									<div class="form-check">
+										<input class="form-check-input" type="radio" name="location" id="insertHead" value="head" th:checked="${insertLocation == 'head'}">
+										<label class="form-check-label" for="insertHead">
+											Head
+										</label>
+									</div>
+									<div class="form-check">
+										<input class="form-check-input" type="radio" name="location" id="insertMiddle" value="middle" th:checked="${insertLocation == 'middle'}">
+										<label class="form-check-label" for="insertMiddle">
+											Middle
+										</label>
+									</div>
+									<div class="form-check">
+										<input class="form-check-input" type="radio" name="location" id="insertTail" value="tail" th:checked="${insertLocation == 'tail'}">
+										<label class="form-check-label" for="insertTail">
+											Tail
+										</label>
+									</div>
+								</div>
+							</fieldset>
+							<div class="form-group row">
+								<label for="insertAmount" class="col-sm-2 col-form-label">Amount</label>
+								<div class="col-sm-10">
+									<input type="number" min="1" max="20000" class="form-control" id="insertAmount" name="amount" placeholder="Enter the number (1 - 20,000) of elements to insert into the lists" th:value="${insertAmount}">
+								</div>
+							</div>
+
+							<input type="hidden" name="op" value="insert">
+							<small th:if="${insertError}" th:text="${insertError}" class="form-text text-danger"></small>
+							<br>
+							<button type="submit" class="btn btn-primary">Submit</button>
+						</form>
+
+					</div>
+				</div>
+
+
+			</div>
+			<div th:class="${op == 'delete'} ? 'tab-pane fade show active' : 'tab-pane fade'" id="nav-delete" role="tabpanel" aria-labelledby="nav-delete-tab">
+				<br>
+				<div class="card">
+					<div class="card-body clearfix">
+						<h5 class="card-title">Delete Options</h5>
+						<form method="GET" th:action="@{/LLDom}">
+
+							<fieldset class="form-group row">
+								<legend class="col-form-label col-sm-2 float-sm-left pt-0">Location</legend>
+								<div class="col-sm-10">
+									<div class="form-check">
+										<input class="form-check-input" type="radio" name="location" id="deleteHead" value="head" th:checked="${deleteLocation == 'head'}">
+										<label class="form-check-label" for="deleteHead">
+											Head
+										</label>
+									</div>
+									<div class="form-check">
+										<input class="form-check-input" type="radio" name="location" id="deleteMiddle" value="middle" th:checked="${deleteLocation == 'middle'}">
+										<label class="form-check-label" for="deleteMiddle">
+											Middle
+										</label>
+									</div>
+									<div class="form-check">
+										<input class="form-check-input" type="radio" name="location" id="deleteTail" value="tail" th:checked="${deleteLocation == 'tail'}">
+										<label class="form-check-label" for="deleteTail">
+											Tail
+										</label>
+									</div>
+								</div>
+							</fieldset>
+							<div class="form-group row">
+								<label for="insertAmount" class="col-sm-2 col-form-label">Amount</label>
+								<div class="col-sm-10">
+									<input type="number" min="1" max="20000" class="form-control" id="deleteAmount" name="amount" th:value="${deleteAmount}" placeholder="Enter the number (1 - 20,000) of elements to delete from randomly constructed lists of the various list types">
+								</div>
+							</div>
+
+							<input type="hidden" name="op" value="delete">
+							<small th:if="${deleteError}" th:text="${deleteError}" class="form-text text-danger"></small>
+							<br>
+							<button type="submit" class="btn btn-primary">Submit</button>
+						</form>
+
+					</div>
+				</div>
+			</div>
+			<div th:class="${op == 'sort'} ? 'tab-pane fade show active' : 'tab-pane fade'" id="nav-sort" role="tabpanel" aria-labelledby="nav-sort-tab">
+				<br>
+				<div class="card">
+					<div class="card-body clearfix">
+						<h5 class="card-title">Sort Options</h5>
+						<form method="GET" th:action="@{/LLDom}">
+							<div class="form-group row">
+								<label for="insertAmount" class="col-sm-2 col-form-label">Amount</label>
+								<div class="col-sm-10">
+									<input type="number" min="1" max="20000" class="form-control" id="sortAmount" name="amount" th:value="${sortAmount}" placeholder="Enter the number (1 - 20,000) of elements to randomly generate in the various lists before sorting begins">
+								</div>
+							</div>
+
+							<input type="hidden" name="op" value="sort">
+							<small th:if="${sortError}" th:text="${sortError}" class="form-text text-danger"></small>
+							<br>
+							<button type="submit" class="btn btn-primary">Submit</button>
+						</form>
+
+					</div>
+				</div>
+			</div>
+
+		</div>
+
+		<br th:if="${alTime}">
+		<div class="card w-75" th:if="${alTime}" style="padding-left:0;padding-right:0;margin-left:auto;margin-right:auto;display:block;">
+			<div class="card-body clearfix">
+				<h5 class="card-title">Results</h5>
+				<p class="card-text" th:utext="${resultText}"></p>
+
+				<table class="table table-striped" style="margin: auto;">
+					<thead>
+						<tr>
+							<th scope="col">List Type</th>
+							<th scope="col">(Average) Complexity</th>
+							<th scope="col">Time (ms)</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>Array List</td>
+							<td th:text="${alComplexity}"></td>
+							<td th:text="${alTime}"></td>
+						</tr>
+						<tr>
+							<td>Linked List</td>
+							<td th:text="${llComplexity}"></td>
+							<td th:text="${llTime}"></td>
+						</tr>
+					</tbody>
+				</table>
+
+				<br th:if="${bestTime}">
+
+				<p th:if="${bestTime}" th:text="${'Best List Type: ' + bestTime}"></p>
+			</div>
+		</div>
+
+		<br>
+
+		<!-- Bootstrap & JQuery JS -->
+		<div th:replace="fragments/body :: scripts"></div>
+	</body>
+</html>

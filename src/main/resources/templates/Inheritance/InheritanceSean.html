@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org/">
+<head>
+    <div th:replace="fragments/header :: head"></div>
+    <title>Animal Inheritance Lab</title>
+</head>
+
+
+<body>
+<div th:replace="fragments/body :: navbar"></div>
+
+<div class="header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+    <h1 class="display-4">Animal Inheritance Lab</h1>
+    <hr>
+    <br>
+</div>
+
+<div class="card w-75" style="padding-left:0;padding-right:0;margin-left:auto;margin-right:auto;display:block;">
+    <div class="card-body">
+        <h5 class="card-title">Animal Collection</h5>
+        <table class="table table-striped" style = "margin: auto;">
+            <tr>
+                <td>Name</td>
+                <td>Type</td>
+                <td>Species</td>
+                <td>Age</td>
+                <td>Diet</td>
+            </tr>
+            <th:block th:each="animal : ${animals}">
+                <tr>
+                    <td th:text="${animal.getName()}">...</td>
+                    <td th:text="${animal.getType()}">...</td>
+                    <td th:text="${animal.getSpecies()}">...</td>
+                    <td th:text="${animal.getAge()}">...</td>
+                    <td th:text="${animal.getDiet()}">...</td>
+                </tr>
+            </th:block>
+        </table>
+    </div>
+</div>
+
+<hr>
+<br>
+
+<div class="card w-75" style="padding-left:0;padding-right:0;margin-left:auto;margin-right:auto;margin-bottom:auto;display:block;">
+    <div class="card-body">
+        <h5 class="card-title">Choose Sort Method</h5>
+        <form method="GET" th:action="@{/InheritanceSean}">
+            <fieldset class="form-group row">
+                <div class="col-sm-10">
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="sortMethod" id="name" value="name" th:checked="${sortMethod == 'name'}">
+                        <label class="form-check-label" for="name">
+                            Name
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="sortMethod" id="type" value="type" th:checked="${sortMethod == 'type'}">
+                        <label class="form-check-label" for="type">
+                            Type
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="sortMethod" id="species" value="species" th:checked="${sortMethod == 'species'}">
+                        <label class="form-check-label" for="species">
+                            Species
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="sortMethod" id="age" value="age" th:checked="${sortMethod == 'age'}">
+                        <label class="form-check-label" for="age">
+                            Age
+                        </label>
+                    </div>
+                </div>
+            </fieldset>
+
+            <div class="form-group row">
+                <div class="col-sm-10">
+                    <button type="submit" class="btn btn-primary">Modify</button>
+                </div>
+            </div>
+
+        </form>
+    </div>
+</div>
+
+<br>
+<hr>
+
+<div th:replace="fragments/body :: scripts"></div>
+
+
+</body>
+</html>
